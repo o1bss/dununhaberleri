@@ -1,0 +1,37 @@
+name: Günlük Haber Güncelleme
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo'yu çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıkları yükle
+        run: pip install anthropic
+
+      - name: Haberleri güncelle
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python update_news.py
+
+      - name: Değişiklikleri commit ve push et
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Haber Botu"
+          git add index.html
+          git diff --staged --quiet || git commit -m "📰 Haberler güncellendi"
+          git push
