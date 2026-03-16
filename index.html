@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünün Teknoloji Haberleri | Günlük Teknoloji Bülteni</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Google AdSense -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface-hover: #1a1a28;
+  --border: #1e1e2e;
+  --border-light: #2a2a3a;
+  --text: #e8e6e3;
+  --text-muted: #8a8a9a;
+  --text-dim: #555566;
+  --accent-red: #ff3b30;
+  --accent-orange: #ff9500;
+  --accent-blue: #007aff;
+  --accent-green: #34c759;
+  --accent-yellow: #ffd60a;
+  --wordle-correct: #538d4e;
+  --wordle-present: #b59f3b;
+  --wordle-absent: #3a3a4c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── LAYOUT ── */
+.page-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 48px 0 32px;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,59,48,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.date-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  border: 1px solid rgba(255,59,48,0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  animation: fadeDown 0.6s ease 0.1s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, #ff3b30, #ff9500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 14px;
+  max-width: 480px;
+  margin: 0 auto;
+  animation: fadeDown 0.6s ease 0.2s both;
+}
+
+/* ── AD BANNERS ── */
+.ad-banner {
+  background: var(--surface);
+  border: 1px dashed var(--border-light);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  margin: 0 auto 24px;
+  max-width: 728px;
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-banner .ad-placeholder,
+.ad-inline .ad-placeholder,
+.ad-sidebar .ad-placeholder {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.ad-label {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.ad-inline {
+  background: var(--surface);
+  border: 1px dashed var(--border-light);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 12px 0;
+  text-align: center;
+  position: relative;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-sidebar {
+  background: var(--surface);
+  border: 1px dashed var(--border-light);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── CATEGORY NAV ── */
+.category-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 0 28px;
+  flex-wrap: wrap;
+  animation: fadeDown 0.6s ease 0.3s both;
+}
+
+.cat-pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.cat-pill:hover, .cat-pill.active {
+  color: var(--text);
+  border-color: var(--pill-color, var(--accent-red));
+  background: color-mix(in srgb, var(--pill-color, var(--accent-red)) 10%, transparent);
+}
+
+.cat-pill[data-cat="ai"] { --pill-color: var(--accent-red); }
+.cat-pill[data-cat="marketing"] { --pill-color: var(--accent-orange); }
+.cat-pill[data-cat="software"] { --pill-color: var(--accent-blue); }
+.cat-pill[data-cat="finance"] { --pill-color: var(--accent-green); }
+
+/* ── SIDEBAR ── */
+.sidebar { position: sticky; top: 24px; }
+
+/* ── CALENDAR ── */
+.calendar-widget {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cal-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cal-nav {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.cal-nav:hover { border-color: var(--accent-red); color: var(--text); }
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.cal-weekday {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-align: center;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  padding: 4px 0;
+}
+
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  font-weight: 500;
+}
+
+.cal-day:hover:not(.empty):not(.future) { background: var(--surface-hover); }
+.cal-day.empty { cursor: default; }
+.cal-day.future { color: var(--text-dim); opacity: 0.3; cursor: default; }
+.cal-day.today { border: 1px solid var(--accent-red); color: var(--accent-red); }
+.cal-day.selected { background: var(--accent-red); color: #fff; }
+.cal-day.selected.today { border-color: transparent; }
+
+.cal-day.has-news::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-green);
+}
+
+.cal-day.selected.has-news::after { background: #fff; }
+
+.cal-selected-info {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.cal-status.available { color: var(--accent-green); }
+.cal-status.unavailable { color: var(--text-dim); }
+
+/* ── WORDLE ── */
+.wordle-widget {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.wordle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.wordle-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.wordle-subtitle {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: 'Space Mono', monospace;
+}
+
+.wordle-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.wordle-row {
+  display: flex;
+  gap: 5px;
+}
+
+.wordle-cell {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border-light);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  color: var(--text);
+}
+
+.wordle-cell.filled { border-color: var(--text-muted); animation: pop 0.1s ease; }
+.wordle-cell.correct { background: var(--wordle-correct); border-color: var(--wordle-correct); color: #fff; }
+.wordle-cell.present { background: var(--wordle-present); border-color: var(--wordle-present); color: #fff; }
+.wordle-cell.absent { background: var(--wordle-absent); border-color: var(--wordle-absent); color: #fff; }
+
+.wordle-cell.reveal {
+  animation: flip 0.5s ease forwards;
+}
+
+@keyframes flip {
+  0% { transform: rotateX(0); }
+  50% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.wordle-keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.kb-row {
+  display: flex;
+  gap: 3px;
+}
+
+.kb-key {
+  min-width: 22px;
+  height: 32px;
+  border: none;
+  border-radius: 5px;
+  background: var(--border-light);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  padding: 0 6px;
+}
+
+.kb-key:hover { background: #3a3a50; }
+.kb-key.wide { min-width: 34px; font-size: 8px; }
+.kb-key.correct { background: var(--wordle-correct); color: #fff; }
+.kb-key.present { background: var(--wordle-present); color: #fff; }
+.kb-key.absent { background: #1a1a24; color: var(--text-dim); }
+
+.wordle-msg {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  min-height: 20px;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+
+.wordle-msg.win { color: var(--wordle-correct); }
+.wordle-msg.lose { color: var(--accent-red); }
+
+/* ── NEWS CARDS ── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label .dot { width: 8px; height: 8px; border-radius: 50%; }
+.section-label.ai { color: var(--accent-red); }
+.section-label.ai .dot { background: var(--accent-red); }
+.section-label.marketing { color: var(--accent-orange); }
+.section-label.marketing .dot { background: var(--accent-orange); }
+.section-label.software { color: var(--accent-blue); }
+.section-label.software .dot { background: var(--accent-blue); }
+.section-label.finance { color: var(--accent-green); }
+.section-label.finance .dot { background: var(--accent-green); }
+
+.news-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease both;
+}
+
+.news-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.news-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  transform: translateY(-1px);
+}
+
+.news-card:hover::before { opacity: 1; }
+.news-card.cat-ai::before { background: linear-gradient(135deg, #ff3b30, #ff6b6b); }
+.news-card.cat-marketing::before { background: linear-gradient(135deg, #ff9500, #ffb74d); }
+.news-card.cat-software::before { background: linear-gradient(135deg, #007aff, #5ac8fa); }
+.news-card.cat-finance::before { background: linear-gradient(135deg, #34c759, #30d158); }
+
+.card-top { display: flex; align-items: flex-start; gap: 14px; }
+
+.card-number {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.cat-ai .card-number { background: rgba(255,59,48,0.12); color: var(--accent-red); }
+.cat-marketing .card-number { background: rgba(255,149,0,0.12); color: var(--accent-orange); }
+.cat-software .card-number { background: rgba(0,122,255,0.12); color: var(--accent-blue); }
+.cat-finance .card-number { background: rgba(52,199,89,0.12); color: var(--accent-green); }
+
+.card-content { flex: 1; }
+.card-title { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 5px; }
+.card-desc { font-size: 12px; line-height: 1.6; color: var(--text-muted); margin-bottom: 8px; }
+
+.card-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  transition: color 0.3s;
+}
+
+.news-card:hover .card-source { color: var(--text-muted); }
+.card-source .arrow { display: inline-block; transition: transform 0.3s; }
+.news-card:hover .card-source .arrow { transform: translateX(3px); }
+
+.no-news {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.no-news .icon { font-size: 40px; margin-bottom: 16px; }
+.no-news h3 { font-size: 16px; margin-bottom: 8px; color: var(--text); }
+.no-news p { font-size: 13px; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer p { font-size: 13px; color: var(--text-muted); }
+.footer a { color: var(--accent-red); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LINKEDIN POPUP ── */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+.popup-overlay.active { opacity: 1; visibility: visible; }
+
+.popup-box {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  z-index: 9999;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  opacity: 0; visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.popup-box.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+.popup-close {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; color: var(--text-dim);
+  font-size: 20px; cursor: pointer; width: 32px; height: 32px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.popup-close:hover { background: var(--surface-hover); color: var(--text); }
+
+.popup-icon {
+  width: 56px; height: 56px; margin: 0 auto 18px;
+  background: linear-gradient(135deg, #0a66c2, #0077b5);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+}
+.popup-icon svg { width: 30px; height: 30px; fill: #fff; }
+
+.popup-box h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px; font-weight: 400; margin-bottom: 8px; line-height: 1.3;
+}
+.popup-box h2 em {
+  font-style: italic;
+  background: linear-gradient(135deg, #0a66c2, #0077b5);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.popup-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+
+.popup-btn-follow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #0a66c2, #0077b5);
+  color: #fff; border: none; padding: 13px 28px; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; text-decoration: none;
+  width: 100%; justify-content: center;
+}
+.popup-btn-follow:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(10,102,194,0.35); }
+.popup-btn-follow svg { width: 18px; height: 18px; fill: #fff; }
+
+.popup-later {
+  display: block; margin-top: 12px; background: none; border: none;
+  color: var(--text-dim); font-size: 12px; font-family: 'Space Mono', monospace;
+  cursor: pointer; letter-spacing: 0.5px; transition: color 0.2s;
+}
+.popup-later:hover { color: var(--text-muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .ad-sidebar { display: none; }
+}
+
+@media (max-width: 550px) {
+  .hero { padding: 36px 0 24px; }
+  .sidebar { grid-template-columns: 1fr; }
+  .wordle-cell { width: 36px; height: 36px; font-size: 15px; }
+  .kb-key { min-width: 20px; height: 32px; font-size: 10px; }
+  .kb-key.wide { min-width: 32px; }
+  .news-card { padding: 14px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-wrapper">
+  <div class="hero">
+    <div class="date-badge" id="heroDate">15 Mart 2026 • Pazar</div>
+    <h1>Dünün <em>Teknoloji</em> Haberleri</h1>
+    <p>Yapay Zeka, Pazarlama, Yazılım ve Finans dünyasından günün en önemli 15 gelişmesi</p>
+  </div>
+
+  <!-- AD: Leaderboard -->
+  <div class="ad-banner">
+    <span class="ad-label">Reklam</span>
+    <div class="ad-placeholder">
+      <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+      Google Ads · Leaderboard 728×90
+    </div>
+  </div>
+
+  <!-- CATEGORY NAV -->
+  <nav class="category-nav">
+    <span class="cat-pill active" data-cat="all" onclick="filterCards('all')">Tümü</span>
+    <span class="cat-pill" data-cat="ai" onclick="filterCards('ai')">🔴 Yapay Zeka</span>
+    <span class="cat-pill" data-cat="marketing" onclick="filterCards('marketing')">🟠 Pazarlama</span>
+    <span class="cat-pill" data-cat="software" onclick="filterCards('software')">🔵 Yazılım</span>
+    <span class="cat-pill" data-cat="finance" onclick="filterCards('finance')">🟢 Finans</span>
+  </nav>
+
+  <!-- ═══ MAIN GRID ═══ -->
+  <div class="main-grid">
+
+    <!-- LEFT: NEWS -->
+    <main id="newsContainer"></main>
+
+    <!-- RIGHT: SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- CALENDAR -->
+      <div class="calendar-widget">
+        <div class="cal-header">
+          <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+          <span class="cal-title" id="calMonthYear"></span>
+          <button class="cal-nav" onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="cal-weekdays">
+          <div class="cal-weekday">Pt</div>
+          <div class="cal-weekday">Sa</div>
+          <div class="cal-weekday">Ça</div>
+          <div class="cal-weekday">Pe</div>
+          <div class="cal-weekday">Cu</div>
+          <div class="cal-weekday">Ct</div>
+          <div class="cal-weekday">Pa</div>
+        </div>
+        <div class="cal-days" id="calDays"></div>
+        <div class="cal-selected-info" id="calSelectedInfo"></div>
+      </div>
+
+      <!-- WORDLE -->
+      <div class="wordle-widget">
+        <div class="wordle-header">
+          <span class="wordle-title">🟩 Tekno Wordle</span>
+          <span class="wordle-subtitle">5 harfli teknoloji kelimesi</span>
+        </div>
+        <div class="wordle-board" id="wordleBoard"></div>
+        <div class="wordle-keyboard" id="wordleKeyboard"></div>
+        <div class="wordle-msg" id="wordleMsg"></div>
+        <div style="text-align:center; margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+          <span style="font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.5px; color:var(--text-dim);">🕗 Her gün 08:00'da güncellenir (TR saati)</span>
+        </div>
+      </div>
+
+      <!-- AD: Sidebar -->
+      <div class="ad-sidebar">
+        <span class="ad-label">Reklam</span>
+        <div class="ad-placeholder">
+          <!-- <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+          Google Ads · Medium Rectangle 300×250
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- AD: Bottom Banner -->
+  <div class="ad-banner" style="margin-top: 32px;">
+    <span class="ad-label">Reklam</span>
+    <div class="ad-placeholder">
+      <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+      Google Ads · Leaderboard 728×90
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Dünün Teknoloji Haberleri · Her gün güncellenir<br>
+    <a href="https://www.linkedin.com/company/d%C3%BCn%C3%BCn-teknoloji-haberi/" target="_blank">LinkedIn'de takip et →</a></p>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// NEWS DATABASE (Tarih bazlı arşiv)
+// ══════════════════════════════════════════
+const newsDatabase = {
+  "2026-03-15": [
+    { num: "01", cat: "ai", title: "Tesla Terafab: Musk Kendi AI Çip Fabrikasını Kuruyor", desc: "Elon Musk, Tesla'nın yarı iletken sektörüne gireceğini ve Terafab adlı devasa bir AI çip üretim tesisi kuracağını duyurdu.", url: "https://opentools.ai/news", source: "OPENTOOLS.AI" },
+    { num: "02", cat: "ai", title: "Morgan Stanley: 2026'da Şok Edici AI Atılımı Geliyor", desc: "Morgan Stanley raporu, ABD'deki AI laboratuvarlarının yatırımcıları 'şoke edecek' gelişmeler kaydedeceğini öngörüyor. 9-18 GW enerji açığı bekleniyor.", url: "https://fortune.com/2026/03/13/elon-musk-morgan-stanley-ai-leap-2026/", source: "FORTUNE" },
+    { num: "03", cat: "ai", title: "Amazon Health AI ve Microsoft Copilot Health Tanıtıldı", desc: "Amazon, Prime üyelerine 7/24 ücretsiz sanal sağlık hizmeti sunan Health AI'ı başlattı. Microsoft ise sağlık verilerini birleştiren Copilot Health'i duyurdu.", url: "https://www.healthcareittoday.com/2026/03/15/bonus-features-march-15-2026-amazon-and-microsoft-launch-healthcare-ai-agents-plus-23-more-stories/", source: "HEALTHCARE IT TODAY" },
+    { num: "04", cat: "ai", title: "NVIDIA GTC 2026 Yarın Başlıyor — Piyasalar Heyecanlı", desc: "Jensen Huang'ın keynote'u sektörün yönünü belirleyecek. Truist $283, Baird $300 hedef fiyat veriyor. Inference ve robotik odakta.", url: "https://www.nvidia.com/gtc/", source: "NVIDIA" },
+    { num: "05", cat: "ai", title: "Macau'da Robot İlk Kez Bir İnsanı Hastaneye Kaldırdı", desc: "Uzaktan kumandalı tanıtım robotu yaşlı bir kadını hastaneye kaldırdı. Çin polisi tarihte ilk kez bir robot-insan olayına müdahale etti.", url: "https://hackaday.com/2026/03/15/hackaday-links-march-15-2026/", source: "HACKADAY" },
+    { num: "06", cat: "marketing", title: "Precision Strategies: 2026'nın 5 Büyük Pazarlama Trendi", desc: "AI'dan bağımsız olarak görünürlük, dikkat ve güvenilirlik savaşı devam ediyor. Reklam ajanslarının yarısının AI platformları 2029'a kadar eskiyecek.", url: "https://www.precisionstrategies.com/the-five-biggest-digital-marketing-trends-in-2026/", source: "PRECISION STRATEGIES" },
+    { num: "07", cat: "marketing", title: "LinkedIn, AI Chatbot'larının En Çok Alıntı Yaptığı Platform Oldu", desc: "ChatGPT, Claude ve Gemini'nin LinkedIn'den yaptığı alıntılar 2025 sonundan bu yana ikiye katlandı. Thought leadership AI yanıtlarını etkiliyor.", url: "https://www.b2the7.com/news-blog/marketing-digital-trends-march-16-2026", source: "B2THE7" },
+    { num: "08", cat: "marketing", title: "Google AI Overviews %17 Trafiği Kendi İçeriğine Yönlendiriyor", desc: "AI arama sonuçları yayıncılardan trafik çalıyor. Markalar owned audience stratejilerine (e-posta, topluluk) yönelmeli.", url: "https://ny-ave.com/blog/march-2026-whats-happening-in-digital-marketing/", source: "NY AVE" },
+    { num: "09", cat: "marketing", title: "Dijital Reklam Harcamalarının %30'u Sahte Gösterimlere Gidiyor", desc: "Yeni araştırmaya göre bot trafiği ve sahte gösterimler dijital reklam bütçelerinin neredeyse üçte birini tüketiyor.", url: "https://www.b2the7.com/news-blog/marketing-digital-trends-march-16-2026", source: "B2THE7" },
+    { num: "10", cat: "software", title: "Oracle ve OpenAI Mega Stargate Veri Merkezi Planını İptal Etti", desc: "ABD'deki dev AI veri merkezi projesi rafa kaldırıldı. Karar, AI altyapı yatırımlarının sürdürülebilirliğini sorgulatıyor.", url: "https://www.techradar.com/news/archive", source: "TECHRADAR" },
+    { num: "11", cat: "software", title: "Valve: Steam Machine 2026'da Çıkacak — Erteleme Yok", desc: "Valve, gecikme söylentilerine rağmen Steam Machine konsolunun 2026 lansmanına bağlı kaldığını teyit etti.", url: "https://www.techradar.com/news/archive", source: "TECHRADAR" },
+    { num: "12", cat: "software", title: "Xizhi Technology: Fotonik Çip Unicorn'u Hong Kong'da Halka Arz Planlıyor", desc: "Baidu, Tencent ve Sequoia destekli Şanghay merkezli fotonik-elektronik bilişim şirketi bu yıl Hong Kong'da halka arz hedefliyor.", url: "https://www.bez-kabli.pl/technology-news-15-03-2026/", source: "BEZ-KABLI" },
+    { num: "13", cat: "finance", title: "S&P 500 Üç Haftalık Düşüş Serisinde — 2026 Dip Noktası", desc: "İran savaşı ve yükselen petrol fiyatları borsaları baskılıyor. S&P 500 %1.6, Dow %2 düştü. Bu hafta Fed faiz kararı gündemde.", url: "https://www.cnbc.com/2026/03/12/stock-market-today-live-updates.html", source: "CNBC" },
+    { num: "14", cat: "finance", title: "Adobe %20 Eridi — CEO Ayrılığı ve AI Tehlikesi Birleşti", desc: "Yazılım sektöründe AI baskısı artıyor. Adobe rehberlik kaçırdı, CEO ayrıldı ve hisseler yılbaşından bu yana %20 değer kaybetti.", url: "https://www.cnbc.com/2026/03/12/stock-market-today-live-updates.html", source: "CNBC" },
+    { num: "15", cat: "finance", title: "AI Finans Raporları: Hedge Fund Çalışanları Bankacılardan Daha Çok Risk Altında", desc: "Anthropic'in raporuna göre AI, finans sektöründe hedge fund çalışanlarını bankacılardan daha fazla etkileyecek.", url: "https://www.llrx.com/2026/03/ai-in-finance-and-banking-march-15-2026/", source: "LLRX" }
+  ]
+  // Yeni günler buraya eklenecek:
+  // "2026-03-16": [ ... ],
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentMonth = 2;
+let currentYear = 2026;
+let selectedDate = "2026-03-15";
+const today = new Date(2026, 2, 16);
+
+const turkishMonths = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const turkishDays = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+
+// ══════════════════════════════════════════
+// CALENDAR
+// ══════════════════════════════════════════
+function renderCalendar() {
+  document.getElementById('calMonthYear').textContent = `${turkishMonths[currentMonth]} ${currentYear}`;
+
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  let startDay = firstDay.getDay() - 1;
+  if (startDay < 0) startDay = 6;
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const container = document.getElementById('calDays');
+  container.innerHTML = '';
+
+  for (let i = 0; i < startDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    container.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dateObj = new Date(currentYear, currentMonth, d);
+
+    if (dateObj > today) el.classList.add('future');
+    if (dateStr === formatDate(today)) el.classList.add('today');
+    if (dateStr === selectedDate) el.classList.add('selected');
+    if (newsDatabase[dateStr]) el.classList.add('has-news');
+
+    if (dateObj <= today) {
+      el.addEventListener('click', () => selectDate(dateStr));
+    }
+
+    container.appendChild(el);
+  }
+
+  updateSelectedInfo();
+}
+
+function selectDate(dateStr) {
+  selectedDate = dateStr;
+  renderCalendar();
+  renderNews();
+  updateHeroDate();
+}
+
+function changeMonth(dir) {
+  currentMonth += dir;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  renderCalendar();
+}
+
+function formatDate(date) {
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+}
+
+function updateSelectedInfo() {
+  const el = document.getElementById('calSelectedInfo');
+  const parts = selectedDate.split('-');
+  const d = new Date(parts[0], parts[1]-1, parts[2]);
+  const dayName = turkishDays[d.getDay()];
+  const hasNews = !!newsDatabase[selectedDate];
+
+  el.innerHTML = `
+    <strong>${parseInt(parts[2])} ${turkishMonths[parseInt(parts[1])-1]} ${parts[0]}</strong> · ${dayName}<br>
+    <span class="cal-status ${hasNews ? 'available' : 'unavailable'}">
+      ${hasNews ? '● ' + newsDatabase[selectedDate].length + ' haber mevcut' : '○ Haber yok'}
+    </span>
+  `;
+}
+
+function updateHeroDate() {
+  const parts = selectedDate.split('-');
+  const d = new Date(parts[0], parts[1]-1, parts[2]);
+  const dayName = turkishDays[d.getDay()];
+  document.getElementById('heroDate').textContent =
+    `${parseInt(parts[2])} ${turkishMonths[parseInt(parts[1])-1]} ${parts[0]} • ${dayName}`;
+}
+
+// ══════════════════════════════════════════
+// NEWS RENDERER
+// ══════════════════════════════════════════
+let activeFilter = 'all';
+
+function renderNews() {
+  const container = document.getElementById('newsContainer');
+  const news = newsDatabase[selectedDate];
+
+  if (!news || news.length === 0) {
+    container.innerHTML = `
+      <div class="no-news">
+        <div class="icon">📭</div>
+        <h3>Bu tarihte haber bulunamadı</h3>
+        <p>Takvimden başka bir gün seçerek arşivdeki haberlere ulaşabilirsiniz.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const categories = {
+    ai: { label: "YAPAY ZEKA", class: "ai" },
+    marketing: { label: "PAZARLAMA", class: "marketing" },
+    software: { label: "YAZILIM & TEKNOLOJİ", class: "software" },
+    finance: { label: "FİNANS", class: "finance" }
+  };
+
+  let html = '';
+  let currentCat = '';
+  let cardCount = 0;
+
+  news.forEach(item => {
+    if (activeFilter !== 'all' && item.cat !== activeFilter) return;
+
+    if (item.cat !== currentCat) {
+      currentCat = item.cat;
+      html += `<div class="section-label ${categories[item.cat].class}" data-section="${item.cat}"><span class="dot"></span>${categories[item.cat].label}</div>`;
+    }
+
+    html += `
+      <a href="${item.url}" target="_blank" class="news-card cat-${item.cat}" data-cat="${item.cat}" style="animation-delay: ${cardCount * 0.04}s">
+        <div class="card-top">
+          <span class="card-number">${item.num}</span>
+          <div class="card-content">
+            <div class="card-title">${item.title}</div>
+            <div class="card-desc">${item.desc}</div>
+            <span class="card-source">${item.source} <span class="arrow">→</span></span>
+          </div>
+        </div>
+      </a>
+    `;
+    cardCount++;
+
+    if (cardCount === 5) {
+      html += `
+        <div class="ad-inline">
+          <span class="ad-label">Reklam</span>
+          <div class="ad-placeholder">Google Ads · In-Article</div>
+        </div>
+      `;
+    }
+  });
+
+  container.innerHTML = html;
+}
+
+function filterCards(cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.classList.toggle('active', pill.dataset.cat === cat);
+  });
+  renderNews();
+}
+
+// ══════════════════════════════════════════
+// WORDLE GAME (Türkçe Teknoloji Kelimeleri)
+// ══════════════════════════════════════════
+// 100 temiz Türkçe 5 harfli teknoloji kelimeleri
+const wordleWords = [
+  "ROBOT","BULUT","EKRAN","MODEL","YAPAY",
+  "ARAMA","TREND","SANAL","PANEL","TABLO",
+  "SÜREÇ","DÖNGÜ","KÜTLE","LAZER","RADAR",
+  "ÖLÇÜM","GÜNEŞ","DÜNYA","UZMAN","BÖLÜM",
+  "KAYIT","DENEY","MESAJ","NESNE","PAKET",
+  "SAYFA","UYARI","YEDEK","BASKI","ÇÖZÜM",
+  "DÜĞÜM","FORUM","GÜÇLÜ","HÜCRE","NOKTA",
+  "ORTAM","PROJE","SEÇİM","TABAN","DEĞER",
+  "İŞLEV","YONGA","BELGE","DİZİN","KABLO",
+  "LİSTE","METİN","PARÇA","DOSYA","GÜVEN",
+  "FİRMA","KURAL","BİRİM","DERLE","ŞİFRE",
+  "AYGIT","DİZGE","EKLEM","KİLİT","TEMEL",
+  "YEREL","YÜZDE","ÇAĞRI","DOĞRU","ENGEL",
+  "HEDEF","KONUM","MARKA","YOĞUN","BUHAR",
+  "ÇEKİM","DERİN","FİZİK","HESAP","KÜÇÜK",
+  "BÜYÜK","BAŞLA","DÖNÜŞ","GÖRÜŞ","KÜTÜK",
+  "TUVAL","ZEMİN","ETKİN","KATMA","MAKRO",
+  "UNSUR","ARACI","MOTOR","SİNİR","GİRİŞ",
+  "ÇIKIŞ","SONAR","VİDEO","SINIF","BOYUT",
+  "GENİŞ","NABİZ","PİLOT","TEMİZ","SEZGI"
+];
+
+const MAX_GUESSES = 6;
+const WORD_LENGTH = 5;
+
+// Günlük Wordle: Tarihe göre kelime seçimi (herkes aynı gün aynı kelimeyi görür)
+function getDailyWord() {
+  const now = new Date();
+  const start = new Date(2026, 0, 1); // 1 Ocak 2026 epoch
+  const daysSinceEpoch = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+  return wordleWords[daysSinceEpoch % wordleWords.length];
+}
+
+// localStorage ile günlük ilerleme kaydetme
+function getTodayKey() {
+  const d = new Date();
+  return `wordle-${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+}
+
+function loadWordleState() {
+  try {
+    const saved = localStorage.getItem(getTodayKey());
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return null;
+}
+
+function saveWordleState() {
+  try {
+    localStorage.setItem(getTodayKey(), JSON.stringify({
+      guesses: wordleGuesses,
+      gameOver: wordleGameOver
+    }));
+  } catch(e) {}
+}
+
+let wordleAnswer = getDailyWord();
+let wordleGuesses = [];
+let wordleCurrent = '';
+let wordleGameOver = false;
+
+function buildWordleBoard() {
+  const board = document.getElementById('wordleBoard');
+  board.innerHTML = '';
+  for (let r = 0; r < MAX_GUESSES; r++) {
+    const row = document.createElement('div');
+    row.className = 'wordle-row';
+    for (let c = 0; c < WORD_LENGTH; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'wordle-cell';
+      cell.id = `wc-${r}-${c}`;
+      row.appendChild(cell);
+    }
+    board.appendChild(row);
+  }
+}
+
+function buildWordleKeyboard() {
+  const layout = [
+    ['E','R','T','Y','U','I','O','P','Ğ','Ü'],
+    ['A','S','D','F','G','H','J','K','L','Ş','İ'],
+    ['SIL','Z','C','V','B','N','M','Ö','Ç','GIR']
+  ];
+
+  const kb = document.getElementById('wordleKeyboard');
+  kb.innerHTML = '';
+
+  layout.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+    row.forEach(key => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (key.length > 1 ? ' wide' : '');
+      btn.textContent = key === 'SIL' ? '⌫' : key === 'GIR' ? '↵' : key;
+      btn.id = `kb-${key}`;
+      btn.addEventListener('click', () => handleWordleKey(key));
+      rowEl.appendChild(btn);
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function handleWordleKey(key) {
+  if (wordleGameOver) return;
+
+  if (key === 'SIL') {
+    wordleCurrent = wordleCurrent.slice(0, -1);
+    updateWordleRow();
+  } else if (key === 'GIR') {
+    if (wordleCurrent.length === WORD_LENGTH) submitWordleGuess();
+  } else {
+    if (wordleCurrent.length < WORD_LENGTH) {
+      wordleCurrent += key;
+      updateWordleRow();
+    }
+  }
+}
+
+function updateWordleRow() {
+  const row = wordleGuesses.length;
+  for (let c = 0; c < WORD_LENGTH; c++) {
+    const cell = document.getElementById(`wc-${row}-${c}`);
+    cell.textContent = wordleCurrent[c] || '';
+    cell.className = 'wordle-cell' + (wordleCurrent[c] ? ' filled' : '');
+  }
+}
+
+function submitWordleGuess() {
+  const guess = wordleCurrent;
+  const row = wordleGuesses.length;
+  const answerArr = wordleAnswer.split('');
+  const result = Array(WORD_LENGTH).fill('absent');
+
+  // First pass: correct
+  for (let i = 0; i < WORD_LENGTH; i++) {
+    if (guess[i] === answerArr[i]) {
+      result[i] = 'correct';
+      answerArr[i] = null;
+    }
+  }
+
+  // Second pass: present
+  for (let i = 0; i < WORD_LENGTH; i++) {
+    if (result[i] === 'correct') continue;
+    const idx = answerArr.indexOf(guess[i]);
+    if (idx !== -1) {
+      result[i] = 'present';
+      answerArr[idx] = null;
+    }
+  }
+
+  // Animate reveal
+  for (let c = 0; c < WORD_LENGTH; c++) {
+    const cell = document.getElementById(`wc-${row}-${c}`);
+    setTimeout(() => {
+      cell.classList.add('reveal', result[c]);
+    }, c * 120);
+
+    // Update keyboard
+    setTimeout(() => {
+      const kbKey = document.getElementById(`kb-${guess[c]}`);
+      if (kbKey) {
+        if (result[c] === 'correct') {
+          kbKey.className = 'kb-key correct';
+        } else if (result[c] === 'present' && !kbKey.classList.contains('correct')) {
+          kbKey.className = 'kb-key present';
+        } else if (!kbKey.classList.contains('correct') && !kbKey.classList.contains('present')) {
+          kbKey.className = 'kb-key absent';
+        }
+      }
+    }, c * 120 + 300);
+  }
+
+  wordleGuesses.push(guess);
+
+  setTimeout(() => {
+    const msg = document.getElementById('wordleMsg');
+    if (guess === wordleAnswer) {
+      wordleGameOver = true;
+      msg.textContent = `🎉 Tebrikler! ${wordleGuesses.length}/${MAX_GUESSES} denemede buldunuz!`;
+      msg.className = 'wordle-msg win';
+    } else if (wordleGuesses.length >= MAX_GUESSES) {
+      wordleGameOver = true;
+      msg.textContent = `Cevap: ${wordleAnswer}`;
+      msg.className = 'wordle-msg lose';
+    }
+  }, WORD_LENGTH * 120 + 200);
+
+  wordleCurrent = '';
+  saveWordleState();
+}
+
+// Günlük ilerlemeyi geri yükle
+function restoreWordleState() {
+  const saved = loadWordleState();
+  if (!saved) return;
+
+  saved.guesses.forEach((guess, row) => {
+    const answerArr = wordleAnswer.split('');
+    const result = Array(WORD_LENGTH).fill('absent');
+
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      if (guess[i] === answerArr[i]) { result[i] = 'correct'; answerArr[i] = null; }
+    }
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      if (result[i] === 'correct') continue;
+      const idx = answerArr.indexOf(guess[i]);
+      if (idx !== -1) { result[i] = 'present'; answerArr[idx] = null; }
+    }
+
+    for (let c = 0; c < WORD_LENGTH; c++) {
+      const cell = document.getElementById(`wc-${row}-${c}`);
+      cell.textContent = guess[c];
+      cell.classList.add(result[c]);
+
+      const kbKey = document.getElementById(`kb-${guess[c]}`);
+      if (kbKey) {
+        if (result[c] === 'correct') kbKey.className = 'kb-key correct';
+        else if (result[c] === 'present' && !kbKey.classList.contains('correct')) kbKey.className = 'kb-key present';
+        else if (!kbKey.classList.contains('correct') && !kbKey.classList.contains('present')) kbKey.className = 'kb-key absent';
+      }
+    }
+
+    wordleGuesses.push(guess);
+  });
+
+  if (saved.gameOver) {
+    wordleGameOver = true;
+    const msg = document.getElementById('wordleMsg');
+    if (saved.guesses[saved.guesses.length - 1] === wordleAnswer) {
+      msg.textContent = `🎉 Tebrikler! ${wordleGuesses.length}/${MAX_GUESSES} denemede buldunuz!`;
+      msg.className = 'wordle-msg win';
+    } else {
+      msg.textContent = `Cevap: ${wordleAnswer}`;
+      msg.className = 'wordle-msg lose';
+    }
+  }
+}
+
+// Fiziksel klavye desteği (Türkçe harfler dahil)
+document.addEventListener('keydown', (e) => {
+  if (wordleGameOver) return;
+  if (e.key === 'Enter') handleWordleKey('GIR');
+  else if (e.key === 'Backspace') handleWordleKey('SIL');
+  else {
+    const upper = e.key.toUpperCase();
+    const validChars = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
+    if (upper.length === 1 && validChars.includes(upper)) {
+      handleWordleKey(upper);
+    }
+  }
+});
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderCalendar();
+renderNews();
+buildWordleBoard();
+buildWordleKeyboard();
+restoreWordleState();
+</script>
+
+<!-- ═══ LINKEDIN POPUP ═══ -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+<div class="popup-box" id="popupBox">
+  <button class="popup-close" onclick="closePopup()">✕</button>
+  <div class="popup-icon">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+  </div>
+  <h2>Bizi <em>LinkedIn'de</em> takip edin</h2>
+  <p class="popup-desc">Her gün yapay zeka, pazarlama, yazılım ve finans dünyasından en önemli 15 haberi kaçırmayın.</p>
+  <a href="https://www.linkedin.com/company/d%C3%BCn%C3%BCn-teknoloji-haberi/" target="_blank" class="popup-btn-follow" onclick="markPopupSeen()">
+    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    LinkedIn'de Takip Et
+  </a>
+  <button class="popup-later" onclick="closePopup()">Daha sonra hatırlat</button>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// LINKEDIN POPUP (24 saat kuralı)
+// ══════════════════════════════════════════
+function showPopup() {
+  document.getElementById('popupOverlay').classList.add('active');
+  document.getElementById('popupBox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('active');
+  document.getElementById('popupBox').classList.remove('active');
+  document.body.style.overflow = '';
+  // "Daha sonra" tıklayınca 24 saat boyunca tekrar gösterme
+  try { localStorage.setItem('linkedin_popup_dismissed', Date.now().toString()); } catch(e) {}
+}
+
+function markPopupSeen() {
+  // Takip linkine tıklayınca bir daha gösterme (kalıcı)
+  try { localStorage.setItem('linkedin_popup_followed', 'true'); } catch(e) {}
+}
+
+function checkPopup() {
+  try {
+    // Eğer daha önce takip ettiyse asla gösterme
+    if (localStorage.getItem('linkedin_popup_followed') === 'true') return;
+
+    const dismissed = localStorage.getItem('linkedin_popup_dismissed');
+    if (dismissed) {
+      const elapsed = Date.now() - parseInt(dismissed);
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      // 24 saat dolmadıysa gösterme
+      if (elapsed < twentyFourHours) return;
+    }
+
+    // 3 saniye sonra popup'ı göster
+    setTimeout(showPopup, 3000);
+  } catch(e) {
+    // localStorage erişim hatası olursa yine de göster
+    setTimeout(showPopup, 3000);
+  }
+}
+
+checkPopup();
+</script>
+
+</body>
+</html>
